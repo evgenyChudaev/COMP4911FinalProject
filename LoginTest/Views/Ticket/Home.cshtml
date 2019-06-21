@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>ServiceZZZZ</h2>
+
+
+        <a class="btn btn-primary-home" asp-action="Index" style="background-image: url(images/service.jpg);  background-repeat: no-repeat; background-size: 200px 200px; "></a>
+
+    </div>
+    <div class="col-md-3">
+        <h2>Incidents</h2>
+        <a class="btn btn-primary-home" asp-action="RedirectToTickets"   style="background-image: url(images/emergency.jpg);   background-repeat: no-repeat; background-size: 200px 200px;  "></a>
+    </div>
+    <div class="col-md-3">
+        <h2>Adhoc</h2>
+        <a class="btn btn-primary-home" asp-action="RedirectToTickets" style="background-image: url(images/adhoc.jpg);  background-repeat: no-repeat; background-size: 200px 200px;  "></a>
+    </div>
+    <div class="col-md-3">
+        <h2> Analytics</h2>
+        <a class="btn btn-primary-home" asp-action="RedirectToTickets" style="background-image: url(images/analytics.png);  background-repeat: no-repeat; background-size: 200px 200px;  "></a>
+    </div>
+
+    <p id="myEmail">@TempData["message"] </p>
+   
+</div>
+
+

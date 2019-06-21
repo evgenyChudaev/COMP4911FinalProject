@@ -1,0 +1,304 @@
+﻿<!-- This view is responsible for charts and visuals in the analytics area -->
+@model LoginTest.Models.AnalyticsParameters
+<!-- Below container is responsible for holding parameters for the filter -->
+<div class="container">
+
+    <div class="row" style="margin-top: 2%; margin-bottom: 1%; position: fixed; z-index: 1; background-color: black; color: white; width: 81%">
+
+        <form asp-action="Filter" style="margin-left: 2%;">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group2">
+                <p>
+                    <label asp-for="yearSubmitted" style="width: 15%; display: inline; margin-right: 8%;">Select a year</label>
+                    <label asp-for="yearSubmitted" style="width: 15%; display: inline; margin-right: 7%;">Select location</label>
+                    <label asp-for="yearSubmitted" style="width: 15%; display: inline; margin-right: 7%;">Select service </label>
+                    <label asp-for="yearSubmitted" style="width: 15%; display: inline; margin-right: 7%;">Select status</label>
+                    <label asp-for="yearSubmitted" style="width: 15%; display: inline; margin-right: 7%;">Select overdue status</label>
+                </p>
+
+                <p>
+                    <select asp-for="yearSubmitted" class="form-control" id="inputYr" style="width: 15%; display: inline;">
+                        <option>All</option>
+                        <option>2017</option>
+                        <option>2018</option>
+                        <option>2019</option>
+                        <option>2020</option>
+                    </select>
+                    <span asp-validation-for="yearSubmitted" class="text-danger"></span>
+
+
+                    <select asp-for="locationSubmitted" class="form-control" id="inputLoc" style="width: 15%; display: inline;">
+                        <option>All</option>
+                        <option>Halifax</option>
+                        <option>Yarmouth</option>
+                        <option>Sydney</option>
+                        <option>Truro</option>
+                    </select>
+                    <span asp-validation-for="locationSubmitted" class="text-danger"></span>
+
+
+
+                    <select asp-for="requestTypeSubmitted" class="form-control" id="inputService" style="width: 15%; display: inline;">
+                        <option>All</option>
+                        <option>Service requests</option>
+                        <option>Incidents</option>
+                        <option>Adhoc</option>
+                    </select>
+                    <span asp-validation-for="requestTypeSubmitted" class="text-danger"></span>
+
+                    <select asp-for="requestStatus" class="form-control" id="inputStatus" style="width: 15%; display: inline;">
+                        <option>All</option>
+                        <option>Submitted</option>
+                        <option>In progress</option>
+                        <option>Closed</option>
+                        <option>On hold</option>
+                        <option>Cancelled</option>
+                    </select>
+                    <span asp-validation-for="requestStatus" class="text-danger"></span>
+
+
+                    <select asp-for="requestOverdue" class="form-control" id="inputOverdue" style="width: 15%; display: inline;">
+                        <option>All</option>
+                        <option>Overdue</option>
+                        <option>Not Overdue</option>
+                    </select>
+                    <span asp-validation-for="requestOverdue" class="text-danger"></span>
+
+                    <input type="submit" value="Filter" class="btn btn-default" />
+
+                </p>
+            </div>
+        </form>
+    </div>
+    <hr style=" margin-bottom: 100px;" />
+
+    <!-- Below div containers hold charts and visuals -->
+    <hr style=" margin-bottom: 0px;  border-width: 4px; display: block; border-color: #0155a3;">
+    <p style="margin-top: 0px; background-color: #0155a3; color: white; width: 400px; ">&nbsp;Request volume by weekday</p>
+    <div id="chartCalendar" style="overflow-y: scroll; height:200px; "></div>
+
+    <hr style=" margin-bottom: 0px; border-width: 4px; display: block; border-color: #0155a3;">
+    <p style="margin-top: 0px; background-color: #0155a3; color: white; width: 400px;">&nbsp;Request volume by month</p>
+    <div id="chartStackedLineSeries"></div>
+
+    <hr style=" margin-bottom: 0px; border-width: 4px; display: block; border-color: #0155a3;">
+    <p style="margin-top: 0px; background-color: #0155a3; color: white; width: 400px;">&nbsp;Request volume by location</p>
+    <div id="map_div"></div>
+
+    <hr style=" margin-bottom: 0px; border-width: 4px; display: block; border-color: #0155a3;">
+    <p style="margin-top: 0px; background-color: #0155a3; color: white; width: 400px;">&nbsp;Request volume by requestor, request type and analyst</p>
+    <div id="chartGroup_div">
+        <table class="columns">
+            <tr>
+                <td>
+                    <div id="chartPieRequestor"></div>
+                </td>
+
+                <td>
+                    <div id="chartTree"></div>
+                </td>
+
+                <td>
+                    <div id="chartPieAnayst"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <hr style=" margin-bottom: 0px; border-width: 4px; display: block; border-color: #0155a3;">
+    <p style="margin-top: 0px; background-color: #0155a3; color: white; width: 400px;">&nbsp;Raw data</p>
+    <div id="table_div"></div>
+
+    <hr>
+
+</div>
+
+<!-- Below JavaScript functions contain logic for rendering charts and visuals in the analytics area -->
+@section scripts{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.load('current', { 'packages': ['treemap'] });
+        google.charts.load('current', { 'packages': ['calendar'] });
+        google.charts.load('current', { 'packages': ['table'] });
+        google.charts.load('current', { 'packages': ['map'], 'mapsApiKey': '<your key>' });
+
+        google.charts.setOnLoadCallback(drawChartRequestor);
+        google.charts.setOnLoadCallback(drawAnalystChart);
+
+        google.charts.setOnLoadCallback(drawLine);
+        google.charts.setOnLoadCallback(drawTree);
+        google.charts.setOnLoadCallback(drawCalendar);
+
+        google.charts.setOnLoadCallback(drawMap);
+        google.charts.setOnLoadCallback(drawTable);
+
+
+        function drawChartRequestor() {
+
+            $.get('JsonDataPie', {
+                year: document.getElementById("inputYr").value,
+                location: document.getElementById("inputLoc").value,
+                service: document.getElementById("inputService").value,
+                status: document.getElementById("inputStatus").value,
+                overdue: document.getElementById("inputOverdue").value,
+                actor: "requestor"
+            }, function (JsonDataPie) {
+                data = google.visualization.arrayToDataTable(JsonDataPie, false);
+
+                var option = {
+                    title: "Volume of tickets by requestor",
+                    width: 400,
+                    height: 400,
+                    pieHole: 0.4,
+                    legend: { position: 'bottom', textStyle: { color: 'blue', fontSize: 10 } }
+                };
+                chart = new google.visualization.PieChart(document.getElementById('chartPieRequestor'));
+                chart.draw(data, option);
+            })
+        }
+
+
+        function drawAnalystChart() {
+
+            $.get('JsonDataPie', {
+                year: document.getElementById("inputYr").value,
+                location: document.getElementById("inputLoc").value,
+                service: document.getElementById("inputService").value,
+                status: document.getElementById("inputStatus").value,
+                overdue: document.getElementById("inputOverdue").value,
+                actor: "analyst"
+            }, function (JsonDataPie) {
+
+                data = google.visualization.arrayToDataTable(JsonDataPie, false);
+
+                var option = {
+                    title: "Volume of tickets by analyst",
+                    width: 400,
+                    height: 400,
+                    pieHole: 0.4,
+                    legend: { position: 'bottom', textStyle: { color: 'blue', fontSize: 10 } }
+
+                };
+                chart = new google.visualization.PieChart(document.getElementById('chartPieAnayst'));
+                chart.draw(data, option);
+            })
+        }
+
+        function drawLine() {
+
+            $.get('JsonDataLine', {
+                year: document.getElementById("inputYr").value, location: document.getElementById("inputLoc").value,
+                service: document.getElementById("inputService").value, status: document.getElementById("inputStatus").value, overdue: document.getElementById("inputOverdue").value
+            }, function (JsonDataLine) {
+                data = google.visualization.arrayToDataTable(JsonDataLine, false);
+                var option = {
+                    isStacked: true,
+
+
+                };
+                chart = new google.visualization.AreaChart(document.getElementById('chartStackedLineSeries'));
+                chart.draw(data, option);
+            })
+        }
+
+        function drawTree() {
+
+            $.get('JsonDataTree', {
+                year: document.getElementById("inputYr").value, location: document.getElementById("inputLoc").value,
+                service: document.getElementById("inputService").value, status: document.getElementById("inputStatus").value, overdue: document.getElementById("inputOverdue").value
+            }, function (JsonDataTree) {
+                data = google.visualization.arrayToDataTable(JsonDataTree, false);
+
+                var tree = new google.visualization.TreeMap(document.getElementById('chartTree'));
+
+                var options = {
+                    highlightOnMouseOver: true,
+                    maxDepth: 1,
+                    maxPostDepth: 2,
+                    minHighlightColor: '#8c6bb1',
+                    midHighlightColor: '#9ebcda',
+                    maxHighlightColor: '#edf8fb',
+                    minColor: '#009688',
+                    midColor: '#f7f7f7',
+                    maxColor: '#ee8100',
+                    headerHeight: 15,
+                    showScale: true,
+                    width: 400,
+                    height: 400,
+
+                    useWeightedAverageForAggregation: true
+                };
+
+                tree.draw(data, options);
+            })
+
+        }
+
+
+        function drawCalendar() {
+            $.get('JsonDataCalendar', {
+                year: document.getElementById("inputYr").value, location: document.getElementById("inputLoc").value,
+                service: document.getElementById("inputService").value, status: document.getElementById("inputStatus").value, overdue: document.getElementById("inputOverdue").value
+            }, function (JsonDataCalendar) {
+
+                var data = google.visualization.arrayToDataTable(JsonDataCalendar, false);
+
+                var dataTable = new google.visualization.DataTable();
+                dataTable.addColumn({ type: 'date', id: 'Date' });
+                dataTable.addColumn({ type: 'number', id: 'Frequency' });
+
+
+                for (var key in JsonDataCalendar) {
+                    if (JsonDataCalendar.hasOwnProperty(key)) {
+                        if (key > 0) {
+                            dataTable.addRows([
+                                [new Date(JsonDataCalendar[key][0], JsonDataCalendar[key][1], JsonDataCalendar[key][2]), JsonDataCalendar[key][3]]
+                            ]);
+                        }
+                    }
+                }
+                var options = {
+
+                    height: 800,
+
+                };
+
+                var chart = new google.visualization.Calendar(document.getElementById('chartCalendar'));
+                chart.draw(dataTable, options);
+            })
+
+        }
+
+
+        function drawTable() {
+
+            $.get('JsonDataTable', {
+                year: document.getElementById("inputYr").value, location: document.getElementById("inputLoc").value,
+                service: document.getElementById("inputService").value, status: document.getElementById("inputStatus").value, overdue: document.getElementById("inputOverdue").value
+            }, function (JsonDataTable) {
+                data = google.visualization.arrayToDataTable(JsonDataTable, false);
+                var table = new google.visualization.Table(document.getElementById('table_div'));
+                table.draw(data, { showRowNumber: true, width: '100%', height: '500px' });
+            })
+        }
+
+
+        function drawMap() {
+            $.get('JsonMapTable', {
+                year: document.getElementById("inputYr").value, location: document.getElementById("inputLoc").value,
+                service: document.getElementById("inputService").value, status: document.getElementById("inputStatus").value, overdue: document.getElementById("inputOverdue").value
+            }, function (JsonMapTable) {
+                data = google.visualization.arrayToDataTable(JsonMapTable, false);
+                var map = new google.visualization.Map(document.getElementById('map_div'));
+                map.draw(data, {
+                    showTooltip: true,
+                    showInfoWindow: true
+                });
+            })
+        }
+
+    </script>
+}

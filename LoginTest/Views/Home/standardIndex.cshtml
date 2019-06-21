@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+  
+    <div class="col-md-3">
+        <h2>Service</h2>
+        <a   asp-action="RedirectToTickets" ><img  src="~/images/service.jpg" height="200" width="200" /></a>
+    </div>
+
+    <div class="col-md-3">
+        <h2>Incidents</h2>
+        <a  asp-action="RedirectToIncidents"><img  src="~/images/emergency.jpg" height="200" width="200" /></a>
+    </div>
+
+    <div class="col-md-3">
+        <h2>Adhoc</h2>
+        <a  asp-action="RedirectToAdhocs"><img  src="~/images/adhoc.jpg" height="200" width="200" /></a>
+    </div>   
+
+</div>
+
+

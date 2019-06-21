@@ -1,0 +1,62 @@
+﻿@model IEnumerable<LoginTest.Models.Adhoc>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Adhoc</h2>
+
+
+<p>
+    <a asp-action="GeneralTickets">General | </a>    <a asp-action="IncidentTickets">Incidents  |</a>
+    </a>   <a asp-action="AdhocTickets">Adhoc  </a>
+</p>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.SubmittedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompletedDate)
+            </th>
+          
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubmittedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletedDate)
+                </td>
+              
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

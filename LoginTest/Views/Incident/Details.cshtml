@@ -1,0 +1,61 @@
+﻿@model LoginTest.Models.Incident
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Incident</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestorID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RequestorID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SubmittedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SubmittedDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Severity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Severity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CompletedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CompletedDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TicketDetails)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TicketDetails)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SupportAnalyst)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SupportAnalyst)
+        </dd>
+    </dl>
+</div>
+<div>  
+    <a asp-action="Index">Back to List</a>
+</div>

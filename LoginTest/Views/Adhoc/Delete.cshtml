@@ -1,0 +1,68 @@
+﻿@model LoginTest.Models.Adhoc
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Adhoc</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestorID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RequestorID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RequiredByDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RequiredByDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SubmittedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SubmittedDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CompletedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CompletedDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Details)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Details)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

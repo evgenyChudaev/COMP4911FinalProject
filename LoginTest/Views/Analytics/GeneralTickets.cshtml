@@ -1,0 +1,78 @@
+﻿@model LoginTest.Models.AnalyticsParameters
+
+
+<div class="row" style="margin-top: 2%; margin-bottom: 1%; position: fixed; z-index: 1; background-color: black; color: white; width: 81%">
+
+    <form asp-action="Filter" style="margin-left: 2%;">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+        <div class="form-group2">
+            <p>
+                <label asp-for="yearSubmitted" style="width: 15%; display: inline; margin-right: 8%;">Select a year</label>
+                <label asp-for="yearSubmitted" style="width: 15%; display: inline; margin-right: 7%;">Select location</label>
+                <label asp-for="yearSubmitted" style="width: 15%; display: inline; margin-right: 7%;">Select service </label>
+                <label asp-for="yearSubmitted" style="width: 15%; display: inline; margin-right: 7%;">Select status</label>
+                <label asp-for="yearSubmitted" style="width: 15%; display: inline; margin-right: 7%;">Select overdue status</label>
+            </p>
+
+
+            <p>
+                <select asp-for="yearSubmitted" class="form-control" id="inputYr" style="width: 15%; display: inline;">
+                    <option>All</option>
+                    <option>2017</option>
+                    <option>2018</option>
+                    <option>2019</option>
+                    <option>2020</option>
+                </select>
+                <span asp-validation-for="yearSubmitted" class="text-danger"></span>
+
+
+                <select asp-for="locationSubmitted" class="form-control" id="inputLoc" style="width: 15%; display: inline;">
+                    <option>All</option>
+                    <option>Halifax</option>
+                    <option>Yarmouth</option>
+                    <option>Sydney</option>
+                    <option>Truro</option>
+                </select>
+                <span asp-validation-for="locationSubmitted" class="text-danger"></span>
+
+
+
+                <select asp-for="requestTypeSubmitted" class="form-control" id="inputService" style="width: 15%; display: inline;">
+                    <option>All</option>
+                    <option>Service requests</option>
+                    <option>Incidents</option>
+                    <option>Adhoc</option>
+                </select>
+                <span asp-validation-for="requestTypeSubmitted" class="text-danger"></span>
+
+                <select asp-for="requestStatus" class="form-control" id="inputStatus" style="width: 15%; display: inline;">
+                    <option>All</option>
+                    <option>Submitted</option>
+                    <option>In progress</option>
+                    <option>Closed</option>
+                    <option>On hold</option>
+                    <option>Cancelled</option>
+                </select>
+                <span asp-validation-for="requestStatus" class="text-danger"></span>
+
+
+                <select asp-for="requestOverdue" class="form-control" id="inputOverdue" style="width: 15%; display: inline;">
+                    <option>All</option>
+                    <option>Overdue</option>
+                    <option>Not Overdue</option>
+                </select>
+                <span asp-validation-for="requestOverdue" class="text-danger"></span>
+
+                <input type="submit" value="Filter" class="btn btn-default" />
+
+            </p>
+
+        </div>
+
+
+    </form>
+
+</div>
+
