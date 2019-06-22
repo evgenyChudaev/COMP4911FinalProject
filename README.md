@@ -2,7 +2,7 @@
 Final Project - COMP4911
 
 
-In order to run this project in your environment as a localhost, you need to install Visual Studio 2017 or later and have your keys for Google APIs and IPStack (they are replaced with <your key > in the project files ). 
+In order to run this project in your environment as a localhost, you need to install Visual Studio 2017 or later with .NET Core 2.1 and have your keys for Google APIs and IPStack (they are replaced with <your key > in the project files ). 
 Also, you will need to update appsettings.json file in the project with your new connection string. 
 
 A working application has also been deployed in Azure cloud for demonstration, testing and evaluation purposes. It is utilizing Azure SQL Database and Azure hosting services and will be removed from the cloud when the project is graded. 
